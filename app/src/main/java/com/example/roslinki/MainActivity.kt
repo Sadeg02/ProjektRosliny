@@ -1,5 +1,6 @@
 package com.example.roslinki
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +10,15 @@ import java.io.InputStreamReader
 import java.io.OutputStream
 import java.net.Socket
 import java.text.SimpleDateFormat
+import java.time.Month
 import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
+
+interface AsyncTaskCompleteListener {
+    fun onTaskComplete(results: List<String>)
+}
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,25 +26,63 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Pobierz referencję do przycisku za pomocą jego ID
-        val connectButton: Button = findViewById(R.id.button)
+        val weekButton: Button = findViewById(R.id.week_button)
+        val monthButton: Button = findViewById(R.id.month_button)
+        // przycisk dla tygodnia
+        weekButton.setOnClickListener {
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            // Uzyskaj dzisiejszą datę
+            val currentDate = Calendar.getInstance().time
+            val endDate = dateFormatter.format(currentDate)
 
-        // Ustaw nasłuchiwacz kliknięcia na przycisku
-        connectButton.setOnClickListener {
-            // Uruchom zadanie klienta gniazda w tle
-            val socketClientTask = SocketClientTask()
+            // Uzyskaj datę początkową (7 dni wcześniej)
+            val startDateCalendar = Calendar.getInstance()
+            startDateCalendar.add(Calendar.DAY_OF_MONTH, -6)
+            val startDate = dateFormatter.format(startDateCalendar.time)
+
+            // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
+            val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
+                override fun onTaskComplete(results: List<String>) {
+                    val aweek = Intent(this@MainActivity, WeekActivity::class.java)
+                    aweek.putStringArrayListExtra("results", ArrayList(results))
+                    startActivity(aweek)
+                }
+            })
+            socketClientTask.execute()
+        }
+
+        //przycisk dla miesiac
+        monthButton.setOnClickListener {
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+            // Uzyskaj dzisiejszą datę
+            val currentDate = Calendar.getInstance().time
+            val endDate = dateFormatter.format(currentDate)
+
+            // Uzyskaj pierwszy dzień aktualnego miesiąca
+            val startDateCalendar = Calendar.getInstance()
+            startDateCalendar.set(Calendar.DAY_OF_MONTH, 1)
+            val startDate = dateFormatter.format(startDateCalendar.time)
+
+            // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
+            val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
+                override fun onTaskComplete(results: List<String>) {
+                    val amonth = Intent(this@MainActivity, MonthActivity::class.java)
+                    amonth.putStringArrayListExtra("results", ArrayList(results))
+                    startActivity(amonth)
+                }
+            })
             socketClientTask.execute()
         }
     }
 }
 
-class SocketClientTask : AsyncTask<Void, Void, String>() {
-
-    override fun doInBackground(vararg params: Void?): String {
+class SocketClientTask(private val startDateStr: String, private val endDateStr: String, private val listener: AsyncTaskCompleteListener) : AsyncTask<Void, Void, List<String>>() {
+    override fun doInBackground(vararg params: Void?): List<String> {
         val serverAddress = "192.168.1.49"
         val serverPort = 8081
 
-        val startDateStr = "2024-01-01"
-        val endDateStr = "2024-01-12"
+        val resultList = mutableListOf<String>()
 
         try {
             val startDateTime = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(startDateStr)
@@ -54,7 +100,6 @@ class SocketClientTask : AsyncTask<Void, Void, String>() {
             outputStream.flush()
 
             val inputStream = BufferedReader(InputStreamReader(socket.getInputStream()))
-            val result = StringBuilder()
 
             var i = 1
             while (i < daysDifference) {
@@ -63,7 +108,7 @@ class SocketClientTask : AsyncTask<Void, Void, String>() {
                     break
                 }
 
-                result.append(data).append("\n")
+                resultList.add(data)
 
                 outputStream.write("gotowe".toByteArray())
                 outputStream.flush()
@@ -72,16 +117,16 @@ class SocketClientTask : AsyncTask<Void, Void, String>() {
             }
 
             socket.close()
-            return result.toString()
+            return resultList
 
         } catch (e: Exception) {
             e.printStackTrace()
-            return "Error: ${e.message}"
+            return listOf("Error: ${e.message}")
         }
     }
 
-    override fun onPostExecute(result: String?) {
+    override fun onPostExecute(result: List<String>) {
         // Tutaj możesz obsługiwać wynik po zakończeniu zadania
-        println(result)
+        listener.onTaskComplete(result)
     }
 }
