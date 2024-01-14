@@ -6,7 +6,9 @@ plugins {
 android {
     namespace = "com.example.roslinki"
     compileSdk = 34
-
+    buildFeatures {
+        dataBinding = true
+    }
     defaultConfig {
         applicationId = "com.example.roslinki"
         minSdk = 26
@@ -50,4 +52,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("io.ktor:ktor-server-netty:1.6.0")
     implementation("io.ktor:ktor-network:1.6.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("androidx.databinding:databinding-runtime:7.0.0")
 }

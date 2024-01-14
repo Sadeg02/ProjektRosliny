@@ -39,7 +39,25 @@ class MainActivity : AppCompatActivity() {
             val startDateCalendar = Calendar.getInstance()
             startDateCalendar.add(Calendar.DAY_OF_MONTH, -6)
             val startDate = dateFormatter.format(startDateCalendar.time)
-
+/*
+            val sfabrykowaneDane = listOf(
+                "2024-01-09: (85.2, 45.3, 72.6)",
+                "2024-01-10: (82.3, 52.8, 59.1)",
+                "2024-01-11: (87.8, 39.7, 66.7)",
+                "2024-01-12: (88.6, 60.4, 71.4)",
+                "2024-01-13: (84.7, 33.6, 58.2)",
+                "2024-01-14: (86.4, 46.9, 67.8)",
+                "2024-01-15: (87.3, 54.2, 60.9)",
+                "2024-01-16: (85.9, 63.1, 73.7)",
+                "2024-01-17: (89.5, 35.9, 56.4)",
+                "2024-01-18: (84.2, 43.7, 68.3)",
+                "2024-01-19: (86.9, 50.6, 61.8)",
+                "2024-01-20: (88.0, 37.4, 70.5)"
+            )
+            val aweek = Intent(this@MainActivity, WeekActivity::class.java)
+            aweek.putStringArrayListExtra("results", ArrayList(sfabrykowaneDane))
+            startActivity(aweek)
+            */
             // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
             val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
                 override fun onTaskComplete(results: List<String>) {
@@ -49,6 +67,8 @@ class MainActivity : AppCompatActivity() {
                 }
             })
             socketClientTask.execute()
+
+
         }
 
         //przycisk dla miesiac
