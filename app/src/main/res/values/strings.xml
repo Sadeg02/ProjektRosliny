@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Roslinki</string>
-    <string name="week_button">WeekButton</string>
-    <string name="month_button">MonthButton</string>
+    <string name="week_button">Wyświetl tygodniowy wykres wilgotności</string>
+    <string name="month_button">Wyświetl średnie wartości z poprzedniego miesiąca</string>
 </resources>

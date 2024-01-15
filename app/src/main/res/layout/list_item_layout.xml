@@ -1,0 +1,42 @@
+<!-- res/layout/list_item_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="Data"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textTemperature"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="Temperatura"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textAirHumidity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="Wilgotność powietrza"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textSoilHumidity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="Wilgotność gleby"
+        android:textStyle="bold" />
+</LinearLayout>

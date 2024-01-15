@@ -27,45 +27,48 @@ class WeekActivity : AppCompatActivity() {
         val results = intent.getStringArrayListExtra("results")!!
 
         // Przekształć dane
-        val dane = przekształcNaDwuwymiarowąListę(results)
+        val dane = przekształćListę(results)
 
         // Utwórz listę punktów na wykresie
-        val entries: ArrayList<Entry> = ArrayList()
+        val entriesWilgotnoscGleby: ArrayList<Entry> = ArrayList()
+        val entriesWilgotnoscPowietrza: ArrayList<Entry> = ArrayList()
+
         for (i in dane.indices) {
             // Zakładam, że drugi element wewnętrznej listy to liczba
-            if (dane[i].size > 1) {
-                val value = dane[i][1]
-                if (value is Number) {
-                    entries.add(Entry(i.toFloat(), value.toFloat()))
+            if (dane[i].size > 2) {
+                val wilgotnoscGleby = dane[i][3]
+                val wilgotnoscPowietrza = dane[i][2]
+
+                if (wilgotnoscGleby is Number) {
+                    entriesWilgotnoscGleby.add(Entry(i.toFloat(), wilgotnoscGleby.toFloat()))
+                }
+
+                if (wilgotnoscPowietrza is Number) {
+                    entriesWilgotnoscPowietrza.add(Entry(i.toFloat(), wilgotnoscPowietrza.toFloat()))
                 }
             }
         }
 
-        // Utwórz dataset
-        val dataSet = LineDataSet(entries, "Zmiana wartości")
-        dataSet.color = Color.BLUE
-        dataSet.valueTextColor = Color.BLACK
+        // Utwórz datasety
+        val dataSetWilgotnoscGleby = LineDataSet(entriesWilgotnoscGleby, "Wilgotność gleby")
+        dataSetWilgotnoscGleby.color = Color.BLUE
+        dataSetWilgotnoscGleby.valueTextColor = Color.BLACK
 
-        // Utwórz LineData
-        val lineData = LineData(dataSet)
+        val dataSetWilgotnoscPowietrza = LineDataSet(entriesWilgotnoscPowietrza, "Wilgotność powietrza")
+        dataSetWilgotnoscPowietrza.color = Color.RED
+        dataSetWilgotnoscPowietrza.valueTextColor = Color.BLACK
+
+        // Utwórz LineData z dwoma datasetami
+        val lineData = LineData(dataSetWilgotnoscGleby, dataSetWilgotnoscPowietrza)
 
         // Ustaw dane na wykresie
         lineChart.data = lineData
 
-        // Ustawienie opisu dla wykresu
-        val description = Description()
-        description.text = "Zmiana wartości w czasie"
-        lineChart.description = description
-
-        // Ustawienie osi X na podstawie dat
-        val xAxis = lineChart.xAxis
-        xAxis.valueFormatter = IndexAxisValueFormatter(getDatesFromData(dane))
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setDrawGridLines(false)
-        xAxis.setDrawAxisLine(true)
+        // ... (pozostała część Twojego kodu)
 
         // Odświeżenie wykresu
         lineChart.invalidate()
+
     }
 
     private fun getDatesFromData(data: List<List<Any>>): List<String> {

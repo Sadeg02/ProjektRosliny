@@ -1,11 +1,6 @@
 package com.example.roslinki
 
-import java.security.KeyStore
 import java.time.LocalDate
-import android.graphics.Color
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-
 
 fun przekształcNaDwuwymiarowąListę(listaStringow: List<String>): List<List<Any>> {
     val dwuwymiarowaLista = mutableListOf<List<Any>>()
@@ -15,13 +10,16 @@ fun przekształcNaDwuwymiarowąListę(listaStringow: List<String>): List<List<An
         val matchResult = regex.find(stringDanych)
 
         if (matchResult != null && matchResult.groupValues.size == 5) {
-            val data = LocalDate.parse(matchResult.groupValues[1])
-            val liczba1 = matchResult.groupValues[2].toFloat()
-            val liczba2 = matchResult.groupValues[3].toFloat()
-            val liczba3 = matchResult.groupValues[4].toFloat()
+            try {
+                val data = LocalDate.parse(matchResult.groupValues[1])
+                val liczby = matchResult.groupValues.subList(2, 5).map { it.toDouble() }
 
-            val wiersz = listOf<Any>(data, liczba1, liczba2, liczba3)
-            dwuwymiarowaLista.add(wiersz)
+                val wiersz = listOf<Any>(data, *liczby.toTypedArray())
+                dwuwymiarowaLista.add(wiersz)
+            } catch (e: Exception) {
+                println("Błąd podczas przetwarzania wpisu: $stringDanych")
+                e.printStackTrace()
+            }
         } else {
             println("Błąd w formacie danych dla wpisu: $stringDanych")
         }
@@ -30,4 +28,10 @@ fun przekształcNaDwuwymiarowąListę(listaStringow: List<String>): List<List<An
     return dwuwymiarowaLista
 }
 
-
+fun przekształćListę(sfabrykowaneDane: List<String>): List<List<Any>> {
+    return sfabrykowaneDane.map { wpis ->
+        val (data, wartości) = wpis.split(": ")
+        val liczby = wartości.removeSurrounding("(", ")").split(", ").map { it.toDouble() }
+        listOf(data, liczby[0], liczby[1], liczby[2])
+    }
+}
