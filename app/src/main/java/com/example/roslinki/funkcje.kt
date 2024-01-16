@@ -31,7 +31,7 @@ fun przekształcNaDwuwymiarowąListę(listaStringow: List<String>): List<List<An
 fun przekształćListę(sfabrykowaneDane: List<String>): List<List<Any>> {
     return sfabrykowaneDane.map { wpis ->
         val (data, wartości) = wpis.split(": ")
-        val liczby = wartości.removeSurrounding("(", ")").split(", ").map { it.toDouble() }
-        listOf(data, liczby[0], liczby[1], liczby[2])
+        val liczby = wartości.removeSurrounding("(", ")").split(", ").map { if (it == "None") null else it.toDoubleOrNull() ?: 0.0 }
+        listOf(data, liczby.getOrNull(0) ?: 0.0, liczby.getOrNull(1) ?: 0.0, liczby.getOrNull(2) ?: 0.0)
     }
 }
