@@ -11,6 +11,21 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.formatter.ValueFormatter
+
+class MyXAxisValueFormatter(private val dates: List<String>) : ValueFormatter() {
+    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+        val index = value.toInt()
+        return if (index >= 0 && index < dates.size) {
+            dates[index]
+        } else {
+            ""
+        }
+    }
+}
+
+
 
 class WeekActivity : AppCompatActivity() {
 
@@ -32,6 +47,8 @@ class WeekActivity : AppCompatActivity() {
         // Utwórz listę punktów na wykresie
         val entriesWilgotnoscGleby: ArrayList<Entry> = ArrayList()
         val entriesWilgotnoscPowietrza: ArrayList<Entry> = ArrayList()
+
+        val dates = dane.map { it[0].toString() } // Zakładam, że daty są w pierwszym elemencie wewnętrznej listy
 
         for (i in dane.indices) {
             // Zakładam, że drugi element wewnętrznej listy to liczba
@@ -60,6 +77,10 @@ class WeekActivity : AppCompatActivity() {
 
         // Utwórz LineData z dwoma datasetami
         val lineData = LineData(dataSetWilgotnoscGleby, dataSetWilgotnoscPowietrza)
+
+        // Ustawienie formattera dla osi X
+        val xAxis = lineChart.xAxis
+        xAxis.valueFormatter = MyXAxisValueFormatter(dates)
 
         // Ustaw dane na wykresie
         lineChart.data = lineData
