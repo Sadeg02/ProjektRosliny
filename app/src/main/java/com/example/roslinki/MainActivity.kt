@@ -106,13 +106,14 @@ class MainActivity : AppCompatActivity() {
             val startDate = dateFormatter.format(startDateCalendar.time)
 
             val sfabrykowaneDane = listOf(
+                "2024-01-08: (None, None, None)",
                 "2024-01-09: (85.2, 45.3, 72.6)",
                 "2024-01-10: (82.3, 52.8, 59.1)",
                 "2024-01-11: (87.8, 39.7, 66.7)",
                 "2024-01-12: (88.6, 60.4, 71.4)",
                 "2024-01-13: (84.7, 33.6, 58.2)",
                 "2024-01-14: (86.4, 46.9, 67.8)",
-                "2024-01-15: (87.3, 54.2, 60.9)",
+                "2024-01-15: (None, None, None)",
                 "2024-01-16: (85.9, 63.1, 73.7)",
                 "2024-01-17: (89.5, 35.9, 56.4)",
                 "2024-01-18: (84.2, 43.7, 68.3)",
@@ -146,7 +147,7 @@ class MainActivity : AppCompatActivity() {
 
             // Uzyskaj pierwszy dzień aktualnego miesiąca
             val startDateCalendar = Calendar.getInstance()
-            startDateCalendar.set(Calendar.DAY_OF_MONTH, 1)
+            startDateCalendar.add(Calendar.DAY_OF_MONTH, -30)
             val startDate = dateFormatter.format(startDateCalendar.time)
 
             // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
