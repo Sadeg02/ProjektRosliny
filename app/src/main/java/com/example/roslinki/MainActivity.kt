@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         // Pobierz referencję do TextView
         val textView: TextView = findViewById(R.id.cos)
         val flowerImageView: ImageView = findViewById(R.id.flowerImage)
+        val textView2: TextView = findViewById(R.id.textView2)
+        val textView3: TextView = findViewById(R.id.textView3)
 
         // Pobierz najnowsze dane z serwera
         val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -73,6 +75,10 @@ class MainActivity : AppCompatActivity() {
                             textView.text = textToShow
                         }
                     }
+                    val temperaturaText: String = "Aktualna temperatura:  $val1"
+                    textView2.text = temperaturaText
+                    val powietrzeText: String = "Aktualna wilgotność powietrza: $val2"
+                    textView3.text = powietrzeText
                 }
             }
 
@@ -86,6 +92,8 @@ class MainActivity : AppCompatActivity() {
             val lastData = sfabrykowaneDane.last()
             val values = lastData.substringAfter(": (").substringBefore(")").split(", ")
             val val3 = values[2].toDoubleOrNull()
+            val val2 = values[1].toDoubleOrNull()
+            val val1 = values[0].toDoubleOrNull()
 
             if (val3 != null) {
                 val textToShow = if (val3 < 60) {
@@ -100,6 +108,10 @@ class MainActivity : AppCompatActivity() {
                     textView.text = textToShow
                 }
             }
+            val temperaturaText: String = "Aktualna temperatura:  $val1"
+            textView2.text = temperaturaText
+            val powietrzeText: String = "Aktualna wilgotność powietrza: $val2"
+            textView3.text = powietrzeText
         }
 
 
