@@ -7,6 +7,18 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/dni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Obliczone dni"
+        app:layout_constraintBottom_toTopOf="@+id/week_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.712" />
+
+    <TextView
         android:id="@+id/cos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.241" />
+        app:layout_constraintVertical_bias="0.157" />
 
     <ImageView
         android:id="@+id/flowerImage"
@@ -44,7 +56,7 @@
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cos"
-        app:layout_constraintVertical_bias="0.572" />
+        app:layout_constraintVertical_bias="0.657" />
 
     <Button
         android:id="@+id/month_button"
@@ -85,7 +97,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Temeratura"
         app:layout_constraintBottom_toTopOf="@+id/week_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -97,10 +109,12 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Wilgotnosc Pomieszczenia"
         app:layout_constraintBottom_toTopOf="@+id/week_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.200" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

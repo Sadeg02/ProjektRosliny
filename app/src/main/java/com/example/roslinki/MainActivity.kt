@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         val flowerImageView: ImageView = findViewById(R.id.flowerImage)
         val textView2: TextView = findViewById(R.id.textView2)
         val textView3: TextView = findViewById(R.id.textView3)
+        val textViewDni: TextView = findViewById(R.id.dni)
 
         // Pobierz najnowsze dane z serwera
         val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -58,11 +59,11 @@ class MainActivity : AppCompatActivity() {
                     val val1 = values[0].toDoubleOrNull()
                     val val2 = values[1].toDoubleOrNull()
                     if (val3 != null) {
-                        val textToShow = if (val3 < 50) {
+                        val textToShow = if (val3 < 35) {
 
                             flowerImageView.setImageResource(R.drawable.sadflower)
                             "PODLEJ KWIATEK!!!"
-                        } else if (val3 > 80) {
+                        } else if (val3 > 70) {
                             flowerImageView.setImageResource(R.drawable.waterflower)
                             "PRZELAŁEŚ KWIATKA"
 
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         socketClientTask.execute()/*
 
         val sfabrykowaneDane = listOf(
-            "2024-01-20: (88.0, 37.4, 26)"
+            "2024-01-20: (23.6, 39.4, 26S)"
         )
         if (sfabrykowaneDane.isNotEmpty()) {
             val lastData = sfabrykowaneDane.last()
@@ -118,6 +119,33 @@ class MainActivity : AppCompatActivity() {
             val powietrzeText: String = "Aktualna wilgotność powietrza: $val2"
             textView3.text = powietrzeText
         }*/
+
+
+
+
+        //oblicz ile dni-----------------------------------------------
+        val dateFormatterr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val currentDateforday = Calendar.getInstance().time
+        val endDateforday = dateFormatterr.format(currentDateforday)
+
+        val startDateCalendarforday = Calendar.getInstance()
+        startDateCalendarforday.add(Calendar.DAY_OF_MONTH, -7)
+        val startDateforday = dateFormatterr.format(startDateCalendar.time)
+
+        val socketClientTask2 = SocketClientTask(startDateforday, endDateforday, object : AsyncTaskCompleteListener {
+            override fun onTaskComplete(results: List<String>) {
+
+                val dane: List<List<Any>> = przekształćListę(results)
+                val start: Double = dane[0][3]
+                val end = 30.0
+                val obliczone = obliczdni(dane,start,end)
+                val dniText: String = "Podlanie za około: $obliczone"
+                textViewDni.text = dniText
+
+            }
+        })
+        socketClientTask2.execute()
+
 
 
         // przycisk dla tygodnia
