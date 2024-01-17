@@ -136,11 +136,16 @@ class MainActivity : AppCompatActivity() {
             override fun onTaskComplete(results: List<String>) {
 
                 val dane: List<List<Any>> = przekształćListę(results)
-                val start: Double = dane[0][3]
+                val start: Double = (dane[0][3] as? Double) ?: 0.0
                 val end = 30.0
-                val obliczone = obliczdni(dane,start,end)
-                val dniText: String = "Podlanie za około: $obliczone"
-                textViewDni.text = dniText
+                if(start!=0.0) {
+                    val obliczone = obliczdni(dane, start, end)
+                    val dniText: String = "Podlanie za około: $obliczone"
+                    textViewDni.text = dniText
+                }else{
+                    val dniText: String = "Brak daty dla dnia"
+                    textViewDni.text = dniText
+                }
 
             }
         })

@@ -69,7 +69,7 @@ fun obliczdni(dwuwymiarowaLista: List<List<Any>>,start:Double,end:Double): Int {
     var wynik = 0
     var srednia = roznice.average()
     if(srednia.isNaN() || srednia > 20 || srednia <1){
-        srednia = 7.0
+        srednia = 8.0
     }
     var startowa = start
     val koncowa = end
