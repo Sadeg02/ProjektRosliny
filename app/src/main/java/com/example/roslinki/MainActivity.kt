@@ -48,14 +48,15 @@ class MainActivity : AppCompatActivity() {
         val startDate = dateFormatter.format(startDateCalendar.time)
 
         // Uruchom zadanie klienta gniazda w tle z określonym zakresem daty
-        /*val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
+        val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
             override fun onTaskComplete(results: List<String>) {
                 // Przyjmij, że dane zawsze są w formacie "yyyy-MM-dd: (val1, val2, val3)"
                 if (results.isNotEmpty()) {
                     val lastData = results.last()
                     val values = lastData.substringAfter(": (").substringBefore(")").split(", ")
                     val val3 = values[2].toDoubleOrNull()
-
+                    val val1 = values[0].toDoubleOrNull()
+                    val val2 = values[1].toDoubleOrNull()
                     if (val3 != null) {
                         val textToShow = if (val3 < 50) {
 
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        socketClientTask.execute()*/
+        socketClientTask.execute()/*
 
         val sfabrykowaneDane = listOf(
             "2024-01-20: (88.0, 37.4, 26)"
@@ -96,12 +97,16 @@ class MainActivity : AppCompatActivity() {
             val val1 = values[0].toDoubleOrNull()
 
             if (val3 != null) {
-                val textToShow = if (val3 < 60) {
+                val textToShow = if (val3 < 50) {
+                    flowerImageView.setImageResource(R.drawable.sadflower)
                     "PODLEJ KWIATEK!!!"
+
                 } else if (val3 > 80) {
                     "PRZELAŁEŚ KWIATKA"
+                    flowerImageView.setImageResource(R.drawable.waterflower)
                 } else {
                     "KWIATEK DOBRZE NAWODNIONY"
+                    flowerImageView.setImageResource(R.drawable.happyflower)
                 }
 
                 runOnUiThread {
@@ -112,7 +117,7 @@ class MainActivity : AppCompatActivity() {
             textView2.text = temperaturaText
             val powietrzeText: String = "Aktualna wilgotność powietrza: $val2"
             textView3.text = powietrzeText
-        }
+        }*/
 
 
         // przycisk dla tygodnia
@@ -127,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             startDateCalendar.add(Calendar.DAY_OF_MONTH, -6)
             val startDate = dateFormatter.format(startDateCalendar.time)
 
-            val sfabrykowaneDane = listOf(
+            /*val sfabrykowaneDane = listOf(
                 "2024-01-08: (None, None, None)",
                 "2024-01-09: (85.2, 45.3, 72.6)",
                 "2024-01-10: (82.3, 52.8, 59.1)",
@@ -144,9 +149,9 @@ class MainActivity : AppCompatActivity() {
             )
             val aweek = Intent(this@MainActivity, WeekActivity::class.java)
             aweek.putStringArrayListExtra("results", ArrayList(sfabrykowaneDane))
-            startActivity(aweek)
+            startActivity(aweek)*/
 
-           /* // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
+            // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
             val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
                 override fun onTaskComplete(results: List<String>) {
                     val aweek = Intent(this@MainActivity, WeekActivity::class.java)
@@ -154,7 +159,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(aweek)
                 }
             })
-            socketClientTask.execute()*/
+            socketClientTask.execute()
 
 
         }
@@ -172,7 +177,7 @@ class MainActivity : AppCompatActivity() {
             startDateCalendar.add(Calendar.DAY_OF_MONTH, -30)
             val startDate = dateFormatter.format(startDateCalendar.time)
 
-            /*// Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
+            // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
             val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
                 override fun onTaskComplete(results: List<String>) {
                     val amonth = Intent(this@MainActivity, MonthActivity::class.java)
@@ -180,8 +185,8 @@ class MainActivity : AppCompatActivity() {
                     startActivity(amonth)
                 }
             })
-            socketClientTask.execute()*/
-            val sfabrykowaneDane = listOf(
+            socketClientTask.execute()
+            /*val sfabrykowaneDane = listOf(
                 "2024-01-09: (85.2, 45.3, 72.6)",
                 "2024-01-10: (82.3, 52.8, 59.1)",
                 "2024-01-11: (87.8, 39.7, 66.7)",
@@ -197,7 +202,7 @@ class MainActivity : AppCompatActivity() {
             )
             val amonth = Intent(this@MainActivity, MonthActivity::class.java)
             amonth.putStringArrayListExtra("results", ArrayList(sfabrykowaneDane))
-            startActivity(amonth)
+            startActivity(amonth)*/
         }
 
         monthChart.setOnClickListener {
@@ -212,7 +217,7 @@ class MainActivity : AppCompatActivity() {
             startDateCalendar.add(Calendar.DAY_OF_MONTH, -30)
             val startDate = dateFormatter.format(startDateCalendar.time)
 
-            /*// Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
+            // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
             val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
                 override fun onTaskComplete(results: List<String>) {
                     val monthChart = Intent(this@MainActivity, MonthChart::class.java)
@@ -220,8 +225,8 @@ class MainActivity : AppCompatActivity() {
                     startActivity(monthChart)
                 }
             })
-            socketClientTask.execute()*/
-            val sfabrykowaneDane = listOf(
+            socketClientTask.execute()
+            /*val sfabrykowaneDane = listOf(
                 "2024-01-09: (85.2, 45.3, 72.6)",
                 "2024-01-10: (82.3, 52.8, 59.1)",
                 "2024-01-11: (87.8, 39.7, 66.7)",
@@ -237,7 +242,7 @@ class MainActivity : AppCompatActivity() {
             )
             val monthChart = Intent(this@MainActivity, MonthChart::class.java)
             monthChart.putStringArrayListExtra("results", ArrayList(sfabrykowaneDane))
-            startActivity(monthChart)
+            startActivity(monthChart)*/
         }
     }
 }
