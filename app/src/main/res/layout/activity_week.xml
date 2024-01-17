@@ -14,10 +14,15 @@
         android:orientation="vertical"
         tools:context=".WeekActivity">
 
+        <!-- Dodano lekką przerwę od góry -->
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/wykres"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            /> <!-- Dostosuj wartość marginesu do swoich preferencji -->
 
     </LinearLayout>
 </layout>

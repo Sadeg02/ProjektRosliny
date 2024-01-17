@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.os.AsyncTask
+import android.widget.ImageView
 import android.widget.TextView
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         // Pobierz referencję do TextView
         val textView: TextView = findViewById(R.id.cos)
+        val flowerImageView: ImageView = findViewById(R.id.flowerImage)
 
         // Pobierz najnowsze dane z serwera
         val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         val startDate = dateFormatter.format(startDateCalendar.time)
 
         // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
-        val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
+        /*val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
             override fun onTaskComplete(results: List<String>) {
                 // Przyjmij, że dane zawsze są w formacie "yyyy-MM-dd: (val1, val2, val3)"
                 if (results.isNotEmpty()) {
@@ -53,10 +55,16 @@ class MainActivity : AppCompatActivity() {
 
                     if (val3 != null) {
                         val textToShow = if (val3 < 50) {
+
+                            flowerImageView.setImageResource(R.drawable.sadflower)
                             "PODLEJ KWIATEK!!!"
                         } else if (val3 > 80) {
+                            flowerImageView.setImageResource(R.drawable.waterflower)
                             "PRZELAŁEŚ KWIATKA"
+
                         } else {
+
+                            flowerImageView.setImageResource(R.drawable.happyflower)
                             "KWIATEK DOBRZE NAWODNIONY"
                         }
 
@@ -66,10 +74,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        })
-        socketClientTask.execute()
 
-        /*val sfabrykowaneDane = listOf(
+        })
+        socketClientTask.execute()*/
+
+        val sfabrykowaneDane = listOf(
             "2024-01-20: (88.0, 37.4, 26)"
         )
         if (sfabrykowaneDane.isNotEmpty()) {
@@ -90,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                     textView.text = textToShow
                 }
             }
-        }*/
+        }
 
 
         // przycisk dla tygodnia
