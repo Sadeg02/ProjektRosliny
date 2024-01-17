@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         val startDateCalendar = Calendar.getInstance()
         val startDate = dateFormatter.format(startDateCalendar.time)
 
-        // Uruchom zadanie klienta gniazda w tle z określonym zakresem dat
+        // Uruchom zadanie klienta gniazda w tle z określonym zakresem daty
         /*val socketClientTask = SocketClientTask(startDate, endDate, object : AsyncTaskCompleteListener {
             override fun onTaskComplete(results: List<String>) {
                 // Przyjmij, że dane zawsze są w formacie "yyyy-MM-dd: (val1, val2, val3)"
